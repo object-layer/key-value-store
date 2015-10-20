@@ -1,6 +1,6 @@
 {
   "name": "store-layer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Future proof API abstracting any transactional key-value store",
   "author": "Manuel Vila <mvila@3base.com>",
   "license": "MIT",
