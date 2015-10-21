@@ -192,8 +192,8 @@ let users = await store.getRange({
 #### `options`
 
 - `prefix`: fetch items with keys starting with the specified value.
-- `start`, 'startAfter': fetch items with keys greater than (or "equal to" if you use the `start` option) the specified value.
-- `end`, 'endBefore': fetch items with keys less than (or "equal to" if you use the `end` option) the specified value.
+- `start`, `startAfter`: fetch items with keys greater than (or equal to if you use the `start` option) the specified value.
+- `end`, `endBefore`: fetch items with keys less than (or equal to if you use the `end` option) the specified value.
 - `reverse` _(default: `false`)_: if `true`, reverse the order of returned items.
 - `limit` _(default: `50000`)_: limit the number of fetched items to the specified value.
 - `returnValues` _(default: `true`)_: if `false`, only keys found in the store are returned (no `value` property).
@@ -212,8 +212,8 @@ let users = await store.countRange({
 #### `options`
 
 - `prefix`: count items with keys starting with the specified value.
-- `start`, 'startAfter': count items with keys greater than (or "equal to" if you use the `start` option) the specified value.
-- `end`, 'endBefore': count items with keys less than (or "equal to" if you use the `end` option) the specified value.
+- `start`, `startAfter`: count items with keys greater than (or equal to if you use the `start` option) the specified value.
+- `end`, `endBefore`: count items with keys less than (or equal to if you use the `end` option) the specified value.
 
 ### `store.delRange([options])`
 
@@ -229,8 +229,8 @@ let users = await store.delRange({
 #### `options`
 
 - `prefix`: delete items with keys starting with the specified value.
-- `start`, 'startAfter': delete items with keys greater than (or "equal to" if you use the `start` option) the specified value.
-- `end`, 'endBefore': delete items with keys less than (or "equal to" if you use the `end` option) the specified value.
+- `start`, `startAfter`: delete items with keys greater than (or equal to if you use the `start` option) the specified value.
+- `end`, `endBefore`: delete items with keys less than (or equal to if you use the `end` option) the specified value.
 
 ### `store.transaction(fun)`
 
