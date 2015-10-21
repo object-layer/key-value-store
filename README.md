@@ -1,10 +1,10 @@
 # StoreLayer [![Build Status](https://travis-ci.org/object-layer/store-layer.svg?branch=master)](https://travis-ci.org/object-layer/store-layer)
 
-Future proof API abstracting any transactional key-value store.
+Transactional key-value store on top of any database.
 
 ### Why?
 
-I needed a key-value store supporting ACID transactions. Since currently there are not many solutions, I created a layer above SQL databases like MySQL. My hope is that in the near future I will be able to replace the SQL database with something doing just what I want.
+I needed a key-value store supporting ACID transactions. Since currently there are not many solutions out there, I created a layer above SQL databases like MySQL. My hope is that in the near future I will be able to replace the SQL database with something doing just what I want.
 
 ### Features
 
