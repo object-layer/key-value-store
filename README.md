@@ -89,11 +89,15 @@ async function criticalOperation() {
 
 ### Keys and values
 
-Keys and values can be any kind of data. If a key is an array it is automatically serialized in a way that sort element-wise. Values are serialized with `JSON.stringify`.
+Keys and values can be any kind of data.
+
+If a key is an array it is automatically serialized in a way that sort element-wise. Thanks to that, keys can easily represent "path" (e.g.: ['users', 'abcde12345']).
+
+Values are serialized with `JSON.stringify`. If you need to customize the serialization of your objects, you can implement a `toJSON()` method on them.
 
 ### Promise based API
 
-Every asynchronous operations return a promise. It is a good idea to handle them with the great ES7 async/await feature. Since ES7 is not everywhere yet, you should compile your code with something like [Babel](https://babeljs.io/).
+Every asynchronous operation returns a promise. It is a good idea to handle them with the great ES7 async/await feature. Since ES7 is not really there yet, you should compile your code with something like [Babel](https://babeljs.io/).
 
 ## API
 
@@ -109,7 +113,7 @@ let store = new StoreLayer('mysql://test@localhost/test');
 
 ### `store.get(key, [options])`
 
-Get something from the store.
+Get an item from the store.
 
 ```javascript
 let user = await store.get(['users', 'abcde12345']);
@@ -121,7 +125,7 @@ let user = await store.get(['users', 'abcde12345']);
 
 ### `store.put(key, value, [options])`
 
-Put something in the store.
+Put an item in the store.
 
 ```javascript
 await store.put(['users', 'abcde12345'], { firstName: 'Manu', age: 42 });
@@ -134,7 +138,7 @@ await store.put(['users', 'abcde12345'], { firstName: 'Manu', age: 42 });
 
 ### `store.del(key, [options])`
 
-Delete something from the store.
+Delete an item from the store.
 
 ```javascript
 await store.del(['users', 'abcde12345']);
@@ -143,6 +147,107 @@ await store.del(['users', 'abcde12345']);
 #### `options`
 
 - `errorIfMissing` _(default: `true`)_: if `true`, an error is thrown if the specified `key` is missing from the store. If `false`, the method returns `false` when the `key` is missing.
+
+### `store.getMany(keys, [options])`
+
+Get several items from the store. Return an array of objects composed of two properties: `key` and `value`. The order of the specified `keys` is preserved in the result.
+
+```javascript
+let users = await store.getMany([
+  ['users', 'abcde12345'],
+  ['users', 'abcde67890'],
+  // ...
+]);
+```
+
+#### `options`
+
+- `errorIfMissing` _(default: `true`)_: if `true`, an error is thrown if one of the specified `keys` is missing from the store.
+- `returnValues` _(default: `true`)_: if `false`, only keys found in the store are returned (no `value` property).
+
+### `store.putMany(items, [options])`
+
+Not implemented yet.
+
+### `store.delMany(keys, [options])`
+
+Not implemented yet.
+
+### `store.getRange([options])`
+
+Fetch items matching the specified criteria. Return an array of objects composed of two properties: `key` and `value`. The returned items are ordered by key.
+
+```javascript
+// Fetch all users
+let users = await store.getRange({ prefix: 'users' });
+
+// Fetch 30 users after the 'abcde12345' key
+let users = await store.getRange({
+  prefix: 'users',
+  startAfter: 'abcde12345',
+  limit: 30
+});
+```
+
+#### `options`
+
+- `prefix`: fetch items with keys starting with the specified value.
+- `start`, 'startAfter': fetch items with keys greater than (or "equal to" if you use the `start` option) the specified value.
+- `end`, 'endBefore': fetch items with keys less than (or "equal to" if you use the `end` option) the specified value.
+- `reverse` _(default: `false`)_: if `true`, reverse the order of returned items.
+- `limit` _(default: `50000`)_: limit the number of fetched items to the specified value.
+- `returnValues` _(default: `true`)_: if `false`, only keys found in the store are returned (no `value` property).
+
+### `store.countRange([options])`
+
+Count items matching the specified criteria.
+
+```javascript
+let users = await store.countRange({
+  prefix: 'users',
+  startAfter: 'abcde12345'
+});
+```
+
+#### `options`
+
+- `prefix`: count items with keys starting with the specified value.
+- `start`, 'startAfter': count items with keys greater than (or "equal to" if you use the `start` option) the specified value.
+- `end`, 'endBefore': count items with keys less than (or "equal to" if you use the `end` option) the specified value.
+
+### `store.delRange([options])`
+
+Delete items matching the specified criteria. Return the number of deleted items.
+
+```javascript
+let users = await store.delRange({
+  prefix: 'users',
+  startAfter: 'abcde12345'
+});
+```
+
+#### `options`
+
+- `prefix`: delete items with keys starting with the specified value.
+- `start`, 'startAfter': delete items with keys greater than (or "equal to" if you use the `start` option) the specified value.
+- `end`, 'endBefore': delete items with keys less than (or "equal to" if you use the `end` option) the specified value.
+
+### `store.transaction(fun)`
+
+Run the specified function inside a transaction. The function receives a transaction handler as first argument. This handler should be used as a replacement of the store for every operation made during the execution of the transaction. If any error occurs, the transaction is aborted and the store is automatically rolled back.
+
+```javascript
+// Increment a counter
+await store.transaction(async function(transaction) {
+  let value = await transaction.get('counter');
+  value++;
+  await transaction.put('counter', value);
+});
+```
+
+### `store.close()`
+
+Close all connections to the store.
 
 ## License
 
