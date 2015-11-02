@@ -1,6 +1,6 @@
 'use strict';
 
-export class StoreLayer {
+export class KeyValueStore {
   constructor(url) {
     if (!url) throw new Error('URL is missing');
     let pos = url.indexOf(':');
@@ -11,12 +11,12 @@ export class StoreLayer {
       case 'websql':
       case 'sqlite':
         // TODO: Use ES6 module loader API
-        let AnySQLStoreLayer = require('store-layer-anysql').default;
-        return new AnySQLStoreLayer(url);
+        let AnySQLKeyValueStore = require('key-value-store-anysql').default;
+        return new AnySQLKeyValueStore(url);
       default:
         throw new Error('Unknown database');
     }
   }
 }
 
-export default StoreLayer;
+export default KeyValueStore;

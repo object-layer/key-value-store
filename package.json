@@ -1,5 +1,5 @@
 {
-  "name": "store-layer",
+  "name": "key-value-store",
   "version": "0.1.4",
   "description": "Transactional key-value store on top of any database",
   "author": "Manuel Vila <mvila@3base.com>",
@@ -7,7 +7,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/object-layer/store-layer"
+    "url": "git://github.com/object-layer/key-value-store"
   },
   "scripts": {
     "compile": "babel src --out-dir lib",
@@ -20,7 +20,7 @@
     "test": "echo \"Warning: no test specified\" && exit 0"
   },
   "dependencies": {
-    "store-layer-anysql": "^0.1.2"
+    "key-value-store-anysql": "^0.1.2"
   },
   "devDependencies": {
     "babel": "^5.8.23",

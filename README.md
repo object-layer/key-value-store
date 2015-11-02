@@ -1,4 +1,4 @@
-# StoreLayer [![Build Status](https://travis-ci.org/object-layer/store-layer.svg?branch=master)](https://travis-ci.org/object-layer/store-layer)
+# KeyValueStore [![Build Status](https://travis-ci.org/object-layer/key-value-store.svg?branch=master)](https://travis-ci.org/object-layer/key-value-store)
 
 Transactional key-value store on top of any database.
 
@@ -21,7 +21,7 @@ I needed a key-value store supporting ACID transactions. Since currently there a
 ## Installation
 
 ```
-npm install --save store-layer
+npm install --save key-value-store
 ```
 
 ## Usage
@@ -29,9 +29,9 @@ npm install --save store-layer
 ### Simple operations
 
 ```javascript
-import StoreLayer from 'store-layer';
+import KeyValueStore from 'key-value-store';
 
-let store = new StoreLayer('mysql://test@localhost/test');
+let store = new KeyValueStore('mysql://test@localhost/test');
 
 async function simple() {
   let key = ['users', 'abcde12345'];
@@ -53,9 +53,9 @@ async function simple() {
 ### Range queries
 
 ```javascript
-import StoreLayer from 'store-layer';
+import KeyValueStore from 'key-value-store';
 
-let store = new StoreLayer('mysql://test@localhost/test');
+let store = new KeyValueStore('mysql://test@localhost/test');
 
 async function query() {
   return await store.getRange({
@@ -69,9 +69,9 @@ async function query() {
 ### Transactions
 
 ```javascript
-import StoreLayer from 'store-layer';
+import KeyValueStore from 'key-value-store';
 
-let store = new StoreLayer('mysql://test@localhost/test');
+let store = new KeyValueStore('mysql://test@localhost/test');
 
 async function criticalOperation() {
   await store.transaction(async function(transaction) {
@@ -101,14 +101,14 @@ Every asynchronous operation returns a promise. It is a good idea to handle them
 
 ## API
 
-### `new StoreLayer(url)`
+### `new KeyValueStore(url)`
 
 Create a store for the specified URL.
 
 ```javascript
-import StoreLayer from 'store-layer';
+import KeyValueStore from 'key-value-store';
 
-let store = new StoreLayer('mysql://test@localhost/test');
+let store = new KeyValueStore('mysql://test@localhost/test');
 ```
 
 ### `store.get(key, [options])`
