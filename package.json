@@ -20,7 +20,7 @@
     "test": "echo \"Warning: no test specified\" && exit 0"
   },
   "dependencies": {
-    "key-value-store-anysql": "^0.1.2"
+    "key-value-store-anysql": "^0.1.6"
   },
   "devDependencies": {
     "babel": "^5.8.23",

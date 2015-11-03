@@ -46,7 +46,7 @@ async function simple() {
   await store.put(key, { firstName: 'Manu', age: 43 });
 
   // Delete
-  await store.del(key);
+  await store.delete(key);
 }
 ```
 
@@ -58,7 +58,7 @@ import KeyValueStore from 'key-value-store';
 let store = new KeyValueStore('mysql://test@localhost/test');
 
 async function query() {
-  return await store.getRange({
+  return await store.find({
     prefix: 'users',
     startAfter: 'abcde12345',
     limit: 30
@@ -136,12 +136,12 @@ await store.put(['users', 'abcde12345'], { firstName: 'Manu', age: 42 });
 - `createIfMissing` _(default: `true`)_: if `false`, an error is thrown if the specified `key` is missing from the store. This way you can ensure an "update" semantic.
 - `errorIfExists` _(default: `false`)_: if `true`, an error is thrown if the specified `key` is already present in the store. This way you can ensure a "create" semantic.
 
-### `store.del(key, [options])`
+### `store.delete(key, [options])`
 
 Delete an item from the store.
 
 ```javascript
-await store.del(['users', 'abcde12345']);
+await store.delete(['users', 'abcde12345']);
 ```
 
 #### `options`
@@ -169,20 +169,20 @@ let users = await store.getMany([
 
 Not implemented yet.
 
-### `store.delMany(keys, [options])`
+### `store.deleteMany(keys, [options])`
 
 Not implemented yet.
 
-### `store.getRange([options])`
+### `store.find([options])`
 
 Fetch items matching the specified criteria. Return an array of objects composed of two properties: `key` and `value`. The returned items are ordered by key.
 
 ```javascript
 // Fetch all users
-let users = await store.getRange({ prefix: 'users' });
+let users = await store.find({ prefix: 'users' });
 
 // Fetch 30 users after the 'abcde12345' key
-let users = await store.getRange({
+let users = await store.find({
   prefix: 'users',
   startAfter: 'abcde12345',
   limit: 30
@@ -198,12 +198,12 @@ let users = await store.getRange({
 - `limit` _(default: `50000`)_: limit the number of fetched items to the specified value.
 - `returnValues` _(default: `true`)_: if `false`, only keys found in the store are returned (no `value` property).
 
-### `store.countRange([options])`
+### `store.count([options])`
 
 Count items matching the specified criteria.
 
 ```javascript
-let users = await store.countRange({
+let users = await store.count({
   prefix: 'users',
   startAfter: 'abcde12345'
 });
@@ -215,12 +215,12 @@ let users = await store.countRange({
 - `start`, `startAfter`: count items with keys greater than (or equal to if you use the `start` option) the specified value.
 - `end`, `endBefore`: count items with keys less than (or equal to if you use the `end` option) the specified value.
 
-### `store.delRange([options])`
+### `store.findAndDelete([options])`
 
 Delete items matching the specified criteria. Return the number of deleted items.
 
 ```javascript
-let users = await store.delRange({
+let users = await store.findAndDelete({
   prefix: 'users',
   startAfter: 'abcde12345'
 });
