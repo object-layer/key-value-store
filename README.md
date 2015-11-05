@@ -220,7 +220,7 @@ let users = await store.count({
 Delete items matching the specified criteria. Return the number of deleted items.
 
 ```javascript
-let users = await store.findAndDelete({
+let deletedItemsCount = await store.findAndDelete({
   prefix: 'users',
   startAfter: 'abcde12345'
 });
