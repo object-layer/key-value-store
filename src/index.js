@@ -9,7 +9,7 @@ export class KeyValueStore {
     switch (protocol) {
       case 'mysql':
       case 'websql':
-      case 'sqlite':
+      case 'cordova-sqlite':
         // TODO: Use ES6 module loader API
         let AnySQLKeyValueStore = require('key-value-store-anysql').default;
         return new AnySQLKeyValueStore(url);
