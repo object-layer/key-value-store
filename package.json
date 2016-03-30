@@ -1,6 +1,6 @@
 {
   "name": "key-value-store",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Transactional key-value store on top of any database",
   "author": "Manuel Vila <mvila@3base.com>",
   "license": "MIT",
